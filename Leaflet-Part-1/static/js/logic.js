@@ -47,12 +47,12 @@ function create_markers(response) {
     let max_depth = Math.max(...depth_array);
 
     let rounded_min = Math.floor(min_depth/10) * 10;
-    console.log(rounded_min, max_depth);
+    let rounded_max = Math.floor(max_depth/10) * 10;
+    console.log(rounded_min, rounded_max);
 
-    // Colourscale
-    let colour_scale = chroma.brewer.PuRd;
-    // console.log(colour_scale).colors(6);
-
+    // Define colour scale and limits
+    let colour_scale = chroma.scale(chroma.brewer.PuRd).colors(10);
+    console.log(colour_scale);
     let chroma_limits = chroma.limits(depth_array, 'e', 9);
 
     let scaled = []
@@ -75,7 +75,8 @@ function create_markers(response) {
         
         // Create the marker
         let marker = L.circleMarker([lat, lon], {
-            radius: mag*5
+            radius: mag*5,
+            fillColor: colour_scale[0]
         });
         earthquake_markers.push(marker);
     };
