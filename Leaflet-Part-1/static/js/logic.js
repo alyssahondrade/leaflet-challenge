@@ -2,9 +2,9 @@
 let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
 
 // Define map parameters
-// let australia_coords = [-25.2744, 133.7751]; // australia
-let map_centre = [39.0000, 34.0000];
-let map_zoom = 3;
+let map_centre = [-25.274399, 133.775131]; // Australia
+// let map_centre = [-33.137550, 81.826172]; // Indian Ocean
+let map_zoom = 3.5;
 
 function create_map(layer) {
     // Create the map background tile layer
@@ -45,7 +45,7 @@ function create_markers(response) {
     let earthquake_markers = [];
     
     for (let i=0; i<feature.length; i++) {
-        console.log(feature[i]);
+        console.log(feature[0]);
 
         // Parse the "coordinates" property
         let lat = feature[i].geometry.coordinates[1];
