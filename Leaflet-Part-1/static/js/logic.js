@@ -1,5 +1,4 @@
-// USGS - All month, all earthquakes
-// let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
+// USGS - Past 7 days, all earthquakes
 let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 // Define map parameters
@@ -42,11 +41,19 @@ function create_markers(response) {
     // Pull the "features" property from the response
     let feature = response.features;
 
+    // Get the depths as an array
+    let depth_array = feature.map((feat) => feat.geometry.coordinates[2]);
+    let min_depth = Math.min(...depth_array);
+    let max_depth = Math.max(...depth_array);
+
+    let rounded_min = Math.floor(min_depth/10) * 10;
+    console.log(rounded_min, max_depth);
+    
     // Initialise the array to hold the markers
     let earthquake_markers = [];
     
     for (let i=0; i<feature.length; i++) {
-        console.log(feature[0]);
+        // console.log(feature[0]);
 
         // Parse the "coordinates" property
         let lat = feature[i].geometry.coordinates[1];
@@ -54,8 +61,11 @@ function create_markers(response) {
         let depth = feature[i].geometry.coordinates[2];
 
         // Get the "magnitude"
-        let mag = feature[i].properties.mag;
+        let mag = feature[i].properties.mag;       
 
+        // Colourscale
+        let colour_scale = chroma.brewer.PuRd;
+        
         // Create the marker
         let marker = L.circleMarker([lat, lon], {
             radius: mag*5
