@@ -33,3 +33,5 @@ USGS Earthquake Hazards Program [https://earthquake.usgs.gov/earthquakes/feed/v1
 - [1] Leaflet Provider Demo [https://leaflet-extras.github.io/leaflet-providers/preview/](https://leaflet-extras.github.io/leaflet-providers/preview/)
 
 - [2] Latitude and Longitude Finder [https://www.latlong.net](https://www.latlong.net)
+
+- [3] Leaflet Documentation - Circle Marker [https://leafletjs.com/reference.html#circlemarker](https://leafletjs.com/reference.html#circlemarker)

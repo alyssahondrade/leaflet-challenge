@@ -56,7 +56,7 @@ function create_markers(response) {
         let mag = feature[i].properties.mag;
 
         // Create the marker
-        let marker = L.marker([lat, lon]);
+        let marker = L.circleMarker([lat, lon]);
         earthquake_markers.push(marker);
     };
 
