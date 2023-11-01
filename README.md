@@ -22,7 +22,7 @@ Github repository at: [https://github.com/alyssahondrade/leaflet-challenge.git](
 
 
 ### Dataset
-The project utilises "All Earthquakes" from the "Past 30 Days".
+The project utilises "All Earthquakes" from the "Past 7 Days".
 
 USGS Earthquake Hazards Program [https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
 

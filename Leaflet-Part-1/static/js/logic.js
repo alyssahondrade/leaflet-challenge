@@ -1,5 +1,6 @@
 // USGS - All month, all earthquakes
-let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
+// let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
+let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 // Define map parameters
 let map_centre = [-25.274399, 133.775131]; // Australia
@@ -56,7 +57,9 @@ function create_markers(response) {
         let mag = feature[i].properties.mag;
 
         // Create the marker
-        let marker = L.circleMarker([lat, lon]);
+        let marker = L.circleMarker([lat, lon], {
+            radius: mag*5
+        });
         earthquake_markers.push(marker);
     };
 
