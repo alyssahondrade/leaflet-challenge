@@ -51,7 +51,7 @@ function create_markers(response) {
     console.log(rounded_min, rounded_max);
 
     // Define colour scale and limits
-    let colour_scale = chroma.scale(chroma.brewer.PuRd).colors(10);
+    let colour_scale = chroma.scale(chroma.brewer.YlOrRd).colors(10);
     console.log(colour_scale);
     let chroma_limits = chroma.limits(depth_array, 'e', 9);
 
@@ -76,8 +76,44 @@ function create_markers(response) {
         // Create the marker
         let marker = L.circleMarker([lat, lon], {
             radius: mag*5,
-            fillColor: colour_scale[0]
+            fillColor: colour_scale[0],
+            fillOpacity: 1,
+            color: "grey",
+            weight: 1
         });
+
+        // Adjust the colour
+        // console.log(depth, chroma_limits[1]);
+
+        // AUTOMATE THIS!
+        if (depth < chroma_limits[1]) {
+            marker.options.fillColor = colour_scale[1];
+        }
+        else if (depth < chroma_limits[2]) {
+            marker.options.fillColor = colour_scale[2];
+        }
+        else if (depth < chroma_limits[3]) {
+            marker.options.fillColor = colour_scale[3];
+        }
+        else if (depth < chroma_limits[4]) {
+            marker.options.fillColor = colour_scale[4];
+        }
+        else if (depth < chroma_limits[5]) {
+            marker.options.fillColor = colour_scale[5];
+        }
+        else if (depth < chroma_limits[6]) {
+            marker.options.fillColor = colour_scale[6];
+        }
+        else if (depth < chroma_limits[7]) {
+            marker.options.fillColor = colour_scale[7];
+        }
+        else if (depth < chroma_limits[8]) {
+            marker.options.fillColor = colour_scale[8];
+        }
+        else if (depth < chroma_limits[9]) {
+            marker.options.fillColor = colour_scale[9];
+        }
+        
         earthquake_markers.push(marker);
     };
 
