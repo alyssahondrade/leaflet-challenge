@@ -36,9 +36,9 @@ function create_map(layer, colour_scale, colour_limits) {
     L.control.layers(base_maps, overlay_maps).addTo(my_map);
 
     // Setup the legend
-    console.log(colour_scale);
-    console.log(colour_limits);
+    let legend = L.control({position: "bottomright"});
 
+    // Create the labels to be used in the legend
     colour_labels = [];
     for (let i=0; i<colour_limits.length; i++) {
         if (i === colour_limits.length-1) {
@@ -49,17 +49,13 @@ function create_map(layer, colour_scale, colour_limits) {
         }
     };
 
-    let legend = L.control({position: "bottomright"});
+    // Build the legend
     legend.onAdd = function() {
         let div = L.DomUtil.create("div", "info legend");
         let labels = [];
-        // let legend_info = "<h1>Depth</h1>";
-        // div.innerHTML = legend_info;
-        // div.innerHTML += (`<div style="background-color: ivory"></div>`);
-        d3.select(".info").attr("style", "background-color: ivory");
 
+        // Create the `li` element for each legend colour
         colour_limits.forEach(function(option, index) {
-            // labels.push("<li style=\"background-color: " + colour_scale[index] + "\">" + colour_labels[index] + "</li>");
             labels.push(
                 `<li style="display: flex; align-items: center; padding: 0;">
                     <span style="width: 20px; height: 20px; background-color: ${colour_scale[index]}; margin-right: 5px;"></span>
@@ -68,13 +64,13 @@ function create_map(layer, colour_scale, colour_limits) {
             );
         });
 
-        div.innerHTML += "<ul style=\"list-style: none; padding: 0; margin: 0;\">" + labels.join("") + "</ul>";
+        // Append each label to an unordered list in the 'div'
+        div.innerHTML += `<ul style="list-style: none; padding:0; margin: 0;">${labels.join("")}</ul>`;
 
-        // console.log(document.getElementsByClassName("info legend leaflet-control"));
-        // d3.select(".legend").attr("style", "background-color: ivory");
-        div.style['backgroundColor'] = "mintcream";
-        div.style['border-radius'] = "5px";
-        div.style['padding'] = "10px";
+        // Style the 'div'
+        div.style['backgroundColor'] = "mintcream"; // change the background colour
+        div.style['border-radius'] = "5px"; // round off the edges
+        div.style['padding'] = "10px"; // pad the list 
 
         return div;
     };
@@ -98,11 +94,11 @@ function create_markers(response) {
     console.log(rounded_min, rounded_max);
 
     // Define colour scale and limits
-    // let colour_scale = chroma.scale(chroma.brewer.PuOr).colors(7);
     let num_colours = 6;
     let colour_scale = chroma.scale(["peachpuff", "palevioletred", "rebeccapurple"]).colors(num_colours);
     let chroma_limits = chroma.limits(depth_array, 'e', num_colours-1);
 
+    // Round off the limits to more consistent numbering
     let colour_limits = []
     chroma_limits.forEach((step) => colour_limits.push(Math.floor(step/100) * 100));
     
@@ -112,8 +108,6 @@ function create_markers(response) {
     console.log(typeof feature[0].properties.place);
     
     for (let i=0; i<feature.length; i++) {
-        // console.log(feature[0]);
-
         // Parse the "coordinates" property
         let lat = feature[i].geometry.coordinates[1];
         let lon = feature[i].geometry.coordinates[0];
@@ -122,7 +116,7 @@ function create_markers(response) {
         // Get the "magnitude"
         let mag = feature[i].properties.mag;
 
-        // Get the "place"
+        // Get the "place", as additional info for the popup
         let location = feature[i].properties.place;
         
         // Create the marker
@@ -130,21 +124,19 @@ function create_markers(response) {
             radius: mag*5,
             fillColor: colour_scale[0],
             fillOpacity: 1,
-            color: "grey",
-            weight: 1
+            color: "grey", // line colour
+            weight: 1 // line weight
         }).bindPopup(location);
 
         // Adjust the colour
-        // console.log(depth, chroma_limits[1]);
-
-        // AUTOMATE THIS!
         for (let i=0; i<colour_limits.length; i++) {
             if (depth < colour_limits[i]) {
                 marker.options.fillColor = colour_scale[i];
                 break; // once executed, stop
             }
         };
-        
+
+        // Append the marker to the array
         earthquake_markers.push(marker);
     };
 
@@ -154,7 +146,6 @@ function create_markers(response) {
     // Call the create_map() function
     create_map(markers_layer, colour_scale, colour_limits);
 };
-
 
 
 // Get the data from the url
