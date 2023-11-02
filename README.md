@@ -46,9 +46,9 @@ USGS Earthquake Hazards Program [https://earthquake.usgs.gov/earthquakes/feed/v1
 
 - [8] Javascript using round to the nearest 10 [https://stackoverflow.com/questions/11022488/javascript-using-round-to-the-nearest-10](https://stackoverflow.com/questions/11022488/javascript-using-round-to-the-nearest-10)
 
-- [9] HTML <div> Tag [https://www.w3docs.com/learn-html/html-div-tag.html](https://www.w3docs.com/learn-html/html-div-tag.html)
+- [9] HTML div Tag [https://www.w3docs.com/learn-html/html-div-tag.html](https://www.w3docs.com/learn-html/html-div-tag.html)
 
-- [10] HTML <span> Tag [https://www.w3schools.com/tags/tag_span.asp](https://www.w3schools.com/tags/tag_span.asp)
+- [10] HTML span Tag [https://www.w3schools.com/tags/tag_span.asp](https://www.w3schools.com/tags/tag_span.asp)
 
 - [11] CSS Margin Property [https://www.w3schools.com/cssref/pr_margin.php](https://www.w3schools.com/cssref/pr_margin.php)
 
