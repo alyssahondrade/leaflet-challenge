@@ -90,15 +90,24 @@ function create_markers(response) {
     //-------- COLOUR SCALE --------//
     // Get the depths as an array
     let depth_array = feature.map((feat) => feat.geometry.coordinates[2]);
-
+    
     // Define colour scale and limits
     let num_colours = 6;
     let colour_scale = chroma.scale(["peachpuff", "palevioletred", "rebeccapurple"]).colors(num_colours);
-    let chroma_limits = chroma.limits(depth_array, 'e', num_colours-1);
 
     // Round off the limits to more consistent numbering
+    let min_depth = Math.min(...depth_array);
+    let rounded = Math.floor(min_depth/10) * 10;
+    
     let colour_limits = []
-    chroma_limits.forEach((step) => colour_limits.push(Math.floor(step/100) * 100));
+    for (let i=0; i<num_colours; i++) {
+        if (i === 0) {
+            colour_limits.push(rounded);
+        }
+        else {
+            colour_limits.push(rounded + i * 20);
+        }
+    };
 
     //-------- CREATE MARKERS --------//
     // Initialise the array to hold the markers
