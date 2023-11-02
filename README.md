@@ -3,11 +3,6 @@ Module 15 Challenge - UWA/edX Data Analytics Bootcamp
 
 Github repository at: [https://github.com/alyssahondrade/leaflet-challenge.git](https://github.com/alyssahondrade/leaflet-challenge.git)
 
-Leaflet Part 1: [https://raw.githubusercontent.com/alyssahondrade/leaflet-challenge/main/Leaflet-Part-1/index.html](https://raw.githubusercontent.com/alyssahondrade/leaflet-challenge/main/Leaflet-Part-1/index.html)
-
-Leaflet Part 2: [https://raw.githubusercontent.com/alyssahondrade/leaflet-challenge/main/Leaflet-Part-2/index.html](https://raw.githubusercontent.com/alyssahondrade/leaflet-challenge/main/Leaflet-Part-2/index.html)
-
-
 ## Table of Contents
 1. [Introduction](https://github.com/alyssahondrade/leaflet-challenge#introduction)
     1. [Goal](https://github.com/alyssahondrade/leaflet-challenge#goal)
