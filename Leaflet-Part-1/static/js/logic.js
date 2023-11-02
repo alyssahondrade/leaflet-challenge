@@ -4,9 +4,10 @@ let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.ge
 // Define map parameters
 let map_centre = [-25.274399, 133.775131]; // Australia
 // let map_centre = [-33.137550, 81.826172]; // Indian Ocean
+// let map_centre = [-0.789275, 113.921326]; // Indonesia
 let map_zoom = 3.5;
 
-function create_map(layer) {
+function create_map(layer, colour_scale, colour_limits) {
     // Create the map background tile layer
     let map_background = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -33,6 +34,21 @@ function create_map(layer) {
 
     // Create layer control and add to the map
     L.control.layers(base_maps, overlay_maps).addTo(my_map);
+
+    // Setup the legend
+    console.log(colour_scale);
+    console.log(colour_limits);
+
+    colour_labels = [];
+    for (let i=0; i<colour_limits.length; i++) {
+        if (i === colour_limits.length-1) {
+            colour_labels.push(`${colour_limits[i]}+`);
+        }
+        else {
+            colour_labels.push(`${colour_limits[i]}-${colour_limits[i+1]}`);
+        }
+    };
+    console.log(colour_labels);
 };
 
 
@@ -51,13 +67,11 @@ function create_markers(response) {
     console.log(rounded_min, rounded_max);
 
     // Define colour scale and limits
-    let colour_scale = chroma.scale(chroma.brewer.YlOrRd).colors(10);
-    console.log(colour_scale);
+    let colour_scale = chroma.scale(chroma.brewer.PuOr).colors(10);
     let chroma_limits = chroma.limits(depth_array, 'e', 9);
 
-    let scaled = []
-    chroma_limits.forEach((step) => scaled.push(Math.floor(step/50) * 50));
-    console.log(scaled);
+    let colour_limits = []
+    chroma_limits.forEach((step) => colour_limits.push(Math.floor(step/50) * 50));
     
     // Initialise the array to hold the markers
     let earthquake_markers = [];
@@ -86,33 +100,12 @@ function create_markers(response) {
         // console.log(depth, chroma_limits[1]);
 
         // AUTOMATE THIS!
-        if (depth < chroma_limits[1]) {
-            marker.options.fillColor = colour_scale[1];
-        }
-        else if (depth < chroma_limits[2]) {
-            marker.options.fillColor = colour_scale[2];
-        }
-        else if (depth < chroma_limits[3]) {
-            marker.options.fillColor = colour_scale[3];
-        }
-        else if (depth < chroma_limits[4]) {
-            marker.options.fillColor = colour_scale[4];
-        }
-        else if (depth < chroma_limits[5]) {
-            marker.options.fillColor = colour_scale[5];
-        }
-        else if (depth < chroma_limits[6]) {
-            marker.options.fillColor = colour_scale[6];
-        }
-        else if (depth < chroma_limits[7]) {
-            marker.options.fillColor = colour_scale[7];
-        }
-        else if (depth < chroma_limits[8]) {
-            marker.options.fillColor = colour_scale[8];
-        }
-        else if (depth < chroma_limits[9]) {
-            marker.options.fillColor = colour_scale[9];
-        }
+        for (let i=0; i<colour_limits.length; i++) {
+            if (depth < colour_limits[i]) {
+                marker.options.fillColor = colour_scale[i];
+                break; // once executed, stop
+            }
+        };
         
         earthquake_markers.push(marker);
     };
@@ -121,7 +114,7 @@ function create_markers(response) {
     let markers_layer = L.layerGroup(earthquake_markers);
 
     // Call the create_map() function
-    create_map(markers_layer);
+    create_map(markers_layer, colour_scale, colour_limits);
 };
 
 
