@@ -1,5 +1,6 @@
 // USGS - Past 7 days, all earthquakes
-let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
+let url_markers = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
+let url_plates = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json";
 
 // Define map parameters
 let map_centre = [-25.274399, 133.775131]; // Australia
@@ -7,7 +8,7 @@ let map_centre = [-25.274399, 133.775131]; // Australia
 // let map_centre = [-0.789275, 113.921326]; // Indonesia
 let map_zoom = 3.5;
 
-function create_map(layer, colour_scale, colour_limits) {
+function create_map(markers_layer, tectonic_layer, colour_scale, colour_limits) {
     // Create the map background tile layer
     let map_background = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -22,14 +23,15 @@ function create_map(layer, colour_scale, colour_limits) {
 
     // Create overlay_maps object
     let overlay_maps = {
-        Earthquakes: layer
+        Earthquakes: markers_layer,
+        Plates: tectonic_layer
     };
 
     // Create the map
     let my_map = L.map("map", {
         center: map_centre,
         zoom: map_zoom,
-        layers: [map_background, layer]
+        layers: [map_background, markers_layer, tectonic_layer]
     });
 
     // Create layer control and add to the map
@@ -79,11 +81,12 @@ function create_map(layer, colour_scale, colour_limits) {
 };
 
 
-function create_markers(response) {
+function create_markers(marker_response, plate_response) {
+    // Pull the "features" property from the responses
+    let feature = marker_response.features;
+    let line_feature = plate_response.features;
 
-    // Pull the "features" property from the response
-    let feature = response.features;
-
+    //--------- CREATE MARKERS ---------//
     // Get the depths as an array
     let depth_array = feature.map((feat) => feat.geometry.coordinates[2]);
     let min_depth = Math.min(...depth_array);
@@ -91,7 +94,6 @@ function create_markers(response) {
 
     let rounded_min = Math.floor(min_depth/10) * 10;
     let rounded_max = Math.floor(max_depth/10) * 10;
-    console.log(rounded_min, rounded_max);
 
     // Define colour scale and limits
     let num_colours = 6;
@@ -104,8 +106,6 @@ function create_markers(response) {
     
     // Initialise the array to hold the markers
     let earthquake_markers = [];
-
-    console.log(typeof feature[0].properties.place);
     
     for (let i=0; i<feature.length; i++) {
         // Parse the "coordinates" property
@@ -140,15 +140,34 @@ function create_markers(response) {
         earthquake_markers.push(marker);
     };
 
+    //--------- CREATE LINES ---------//
+    // Initialise the array to hold the lines
+    let tectonic_lines = [];
+
+    for (let i=0; i<line_feature.length; i++) {
+        // console.log(line_feature[i].geometry.coordinates[0]);
+
+        let line_array = line_feature[i].geometry.coordinates[0];
+        for (let item of line_array) {
+            item.reverse();
+        };
+        let lines = L.polyline(line_array, {color: "yellow"});
+        tectonic_lines.push(lines);
+    };
+
+    // Create a layer group made from the lines array
+    let tectonic_layer = L.layerGroup(tectonic_lines);
+
     // Create a layer group made from the marker array
     let markers_layer = L.layerGroup(earthquake_markers);
 
     // Call the create_map() function
-    create_map(markers_layer, colour_scale, colour_limits);
+    create_map(markers_layer, tectonic_layer, colour_scale, colour_limits);
 };
 
-
 // Get the data from the url
-d3.json(url).then(function(response) {
-    create_markers(response);
+d3.json(url_markers).then(function(marker_response) {
+    d3.json(url_plates).then(function(plate_response) {
+        create_markers(marker_response, plate_response);
+    });
 });
