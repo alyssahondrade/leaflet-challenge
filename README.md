@@ -45,3 +45,15 @@ USGS Earthquake Hazards Program [https://earthquake.usgs.gov/earthquakes/feed/v1
 - [7] Color Brewer [https://colorbrewer2.org/#type=sequential&scheme=PuRd&n=3](https://colorbrewer2.org/#type=sequential&scheme=PuRd&n=3)
 
 - [8] Javascript using round to the nearest 10 [https://stackoverflow.com/questions/11022488/javascript-using-round-to-the-nearest-10](https://stackoverflow.com/questions/11022488/javascript-using-round-to-the-nearest-10)
+
+- [9] HTML <div> Tag [https://www.w3docs.com/learn-html/html-div-tag.html](https://www.w3docs.com/learn-html/html-div-tag.html)
+
+- [10] HTML <span> Tag [https://www.w3schools.com/tags/tag_span.asp](https://www.w3schools.com/tags/tag_span.asp)
+
+- [11] CSS Margin Property [https://www.w3schools.com/cssref/pr_margin.php](https://www.w3schools.com/cssref/pr_margin.php)
+
+- [12] How to remove the top and bottom padding [https://stackoverflow.com/questions/9902875/how-to-remove-the-top-and-bottom-padding-which-gets-automatically-created-in-div](https://stackoverflow.com/questions/9902875/how-to-remove-the-top-and-bottom-padding-which-gets-automatically-created-in-div)
+
+- [13] Color Name and Hue [https://www.color-blindness.com/color-name-hue/](https://www.color-blindness.com/color-name-hue/)
+
+- [14] Color Names [https://www.w3schools.com/tags/ref_colornames.asp](https://www.w3schools.com/tags/ref_colornames.asp)

@@ -53,16 +53,29 @@ function create_map(layer, colour_scale, colour_limits) {
     legend.onAdd = function() {
         let div = L.DomUtil.create("div", "info legend");
         let labels = [];
-        let legend_info = "<h1>Depth</h1>";
-        div.innerHTML = legend_info;
+        // let legend_info = "<h1>Depth</h1>";
+        // div.innerHTML = legend_info;
+        // div.innerHTML += (`<div style="background-color: ivory"></div>`);
+        d3.select(".info").attr("style", "background-color: ivory");
 
         colour_limits.forEach(function(option, index) {
             // labels.push("<li style=\"background-color: " + colour_scale[index] + "\">" + colour_labels[index] + "</li>");
             labels.push(
-                `<li style=\"width: 20px; height: 20px; background-color: ${colour_scale[index]}\"></li>`);
+                `<li style="display: flex; align-items: center; padding: 0;">
+                    <span style="width: 20px; height: 20px; background-color: ${colour_scale[index]}; margin-right: 5px;"></span>
+                    <span">${colour_labels[index]}</span>
+                </li>`
+            );
         });
 
-        div.innerHTML += "<ul style=\"list-style: none; padding: 0\">" + labels.join("") + "</ul>";
+        div.innerHTML += "<ul style=\"list-style: none; padding: 0; margin: 0;\">" + labels.join("") + "</ul>";
+
+        // console.log(document.getElementsByClassName("info legend leaflet-control"));
+        // d3.select(".legend").attr("style", "background-color: ivory");
+        div.style['backgroundColor'] = "mintcream";
+        div.style['border-radius'] = "5px";
+        div.style['padding'] = "10px";
+
         return div;
     };
 
@@ -85,11 +98,12 @@ function create_markers(response) {
     console.log(rounded_min, rounded_max);
 
     // Define colour scale and limits
-    let colour_scale = chroma.scale(chroma.brewer.PuOr).colors(10);
-    let chroma_limits = chroma.limits(depth_array, 'e', 9);
+    // let colour_scale = chroma.scale(chroma.brewer.PuOr).colors(7);
+    let colour_scale = chroma.scale(["peachpuff", "palevioletred", "rebeccapurple"]).colors(6);
+    let chroma_limits = chroma.limits(depth_array, 'e', 5);
 
     let colour_limits = []
-    chroma_limits.forEach((step) => colour_limits.push(Math.floor(step/50) * 50));
+    chroma_limits.forEach((step) => colour_limits.push(Math.floor(step/100) * 100));
     
     // Initialise the array to hold the markers
     let earthquake_markers = [];
