@@ -99,14 +99,17 @@ function create_markers(response) {
 
     // Define colour scale and limits
     // let colour_scale = chroma.scale(chroma.brewer.PuOr).colors(7);
-    let colour_scale = chroma.scale(["peachpuff", "palevioletred", "rebeccapurple"]).colors(6);
-    let chroma_limits = chroma.limits(depth_array, 'e', 5);
+    let num_colours = 6;
+    let colour_scale = chroma.scale(["peachpuff", "palevioletred", "rebeccapurple"]).colors(num_colours);
+    let chroma_limits = chroma.limits(depth_array, 'e', num_colours-1);
 
     let colour_limits = []
     chroma_limits.forEach((step) => colour_limits.push(Math.floor(step/100) * 100));
     
     // Initialise the array to hold the markers
     let earthquake_markers = [];
+
+    console.log(typeof feature[0].properties.place);
     
     for (let i=0; i<feature.length; i++) {
         // console.log(feature[0]);
@@ -117,7 +120,10 @@ function create_markers(response) {
         let depth = feature[i].geometry.coordinates[2];
 
         // Get the "magnitude"
-        let mag = feature[i].properties.mag;       
+        let mag = feature[i].properties.mag;
+
+        // Get the "place"
+        let location = feature[i].properties.place;
         
         // Create the marker
         let marker = L.circleMarker([lat, lon], {
@@ -126,7 +132,7 @@ function create_markers(response) {
             fillOpacity: 1,
             color: "grey",
             weight: 1
-        });
+        }).bindPopup(location);
 
         // Adjust the colour
         // console.log(depth, chroma_limits[1]);
