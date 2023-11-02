@@ -5,12 +5,14 @@ Github repository at: [https://github.com/alyssahondrade/leaflet-challenge.git](
 
 
 ## Table of Contents
-1. [Introduction]()
-    1. [Goal]()
-    2. [Repository Structure]()
-    3. [Dataset]()
-2. [Approach]()
-3. [References]()
+1. [Introduction](https://github.com/alyssahondrade/leaflet-challenge#introduction)
+    1. [Goal](https://github.com/alyssahondrade/leaflet-challenge#goal)
+    2. [Repository Structure](https://github.com/alyssahondrade/leaflet-challenge#repository-structure)
+    3. [Dataset](https://github.com/alyssahondrade/leaflet-challenge#dataset)
+2. [Approach](https://github.com/alyssahondrade/leaflet-challenge#approach)
+    1. [Part 1](https://github.com/alyssahondrade/leaflet-challenge#part-1)
+    2. [Part 2](https://github.com/alyssahondrade/leaflet-challenge#part-2)
+3. [References](https://github.com/alyssahondrade/leaflet-challenge#references)
 
 
 ## Introduction
@@ -19,8 +21,8 @@ Github repository at: [https://github.com/alyssahondrade/leaflet-challenge.git](
 The goal of the project is to visualise USGS Earthquake data, such as location, magnitude, and depth, in a meaningful way.
 
 ### Repository Structure
-- [`Leaflet-Part-1`] contains the source code [(`logic.js`)]for the basic earthquake visualisation.
-- [`Leaflet-Part-2`] contains the source code [(`bonus.js`)]for the extended visualisation, which includes tectonic plates.
+- [`Leaflet-Part-1`](https://github.com/alyssahondrade/leaflet-challenge/tree/main/Leaflet-Part-1) contains the source code [(`logic.js`)](https://github.com/alyssahondrade/leaflet-challenge/blob/main/Leaflet-Part-1/static/js/logic.js) for the basic earthquake visualisation.
+- [`Leaflet-Part-2`](https://github.com/alyssahondrade/leaflet-challenge/tree/main/Leaflet-Part-2) contains the source code [(`bonus.js`)](https://github.com/alyssahondrade/leaflet-challenge/blob/main/Leaflet-Part-2/static/js/bonus.js) for the extended visualisation, which includes tectonic plates.
 
 ### Dataset
 1. "All Earthquakes" from the "Past 7 Days" - USGS Earthquake Hazards Program [https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
