@@ -19,15 +19,21 @@ function create_map(markers_layer, tectonic_layer, colour_scale, colour_limits) 
         maxZoom: 20
     });
 
+    let topo_background = L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 20,
+        attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
+});
+
     // Create base_maps object
     let base_maps = {
-        Background: map_background
+        "Street Map": map_background,
+        "Topographic Map": topo_background
     };
 
     // Create overlay_maps object
     let overlay_maps = {
         Earthquakes: markers_layer,
-        Plates: tectonic_layer
+        "Tectonic Plates": tectonic_layer
     };
 
     // Create the map
