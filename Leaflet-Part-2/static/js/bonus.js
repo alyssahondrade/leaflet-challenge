@@ -1,6 +1,7 @@
 // USGS - Past 7 days, all earthquakes
 let url_markers = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
-let url_plates = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json";
+// let url_plates = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json";
+let url_plates = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
 
 // Define map parameters
 let map_centre = [-25.274399, 133.775131]; // Australia
@@ -31,7 +32,8 @@ function create_map(markers_layer, tectonic_layer, colour_scale, colour_limits) 
     let my_map = L.map("map", {
         center: map_centre,
         zoom: map_zoom,
-        layers: [map_background, markers_layer, tectonic_layer]
+        layers: [map_background, markers_layer, tectonic_layer],
+        maxZoom: 2
     });
 
     // Create layer control and add to the map
@@ -145,21 +147,17 @@ function create_markers(marker_response, plate_response) {
     let tectonic_lines = [];
 
     for (let i=0; i<line_feature.length; i++) {
-        // console.log(line_feature[i].geometry.coordinates[0]);
+        let line_array = line_feature[i].geometry.coordinates;
 
-        let line_array = line_feature[i].geometry.coordinates[0];
-        for (let item of line_array) {
-            item.reverse();
-        };
-        let lines = L.polyline(line_array, {color: "yellow"});
+        // Swap the coordinate values to get the correct lat and long
+        let reversed_latlon = line_array.map((coords) => coords.reverse())
+        let lines = L.polyline(reversed_latlon, {color: "yellow"});
         tectonic_lines.push(lines);
     };
 
-    // Create a layer group made from the lines array
-    let tectonic_layer = L.layerGroup(tectonic_lines);
-
-    // Create a layer group made from the marker array
+    //--------- CREATE LAYER GROUPS ---------//
     let markers_layer = L.layerGroup(earthquake_markers);
+    let tectonic_layer = L.layerGroup(tectonic_lines);
 
     // Call the create_map() function
     create_map(markers_layer, tectonic_layer, colour_scale, colour_limits);
