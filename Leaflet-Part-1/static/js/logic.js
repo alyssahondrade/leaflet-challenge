@@ -48,7 +48,25 @@ function create_map(layer, colour_scale, colour_limits) {
             colour_labels.push(`${colour_limits[i]}-${colour_limits[i+1]}`);
         }
     };
-    console.log(colour_labels);
+
+    let legend = L.control({position: "bottomright"});
+    legend.onAdd = function() {
+        let div = L.DomUtil.create("div", "info legend");
+        let labels = [];
+        let legend_info = "<h1>Depth</h1>";
+        div.innerHTML = legend_info;
+
+        colour_limits.forEach(function(option, index) {
+            // labels.push("<li style=\"background-color: " + colour_scale[index] + "\">" + colour_labels[index] + "</li>");
+            labels.push(
+                `<li style=\"width: 20px; height: 20px; background-color: ${colour_scale[index]}\"></li>`);
+        });
+
+        div.innerHTML += "<ul style=\"list-style: none; padding: 0\">" + labels.join("") + "</ul>";
+        return div;
+    };
+
+    legend.addTo(my_map);
 };
 
 
