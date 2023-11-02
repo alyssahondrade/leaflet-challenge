@@ -41,6 +41,7 @@ function create_map(markers_layer, tectonic_layer, colour_scale, colour_limits) 
     // Create layer control and add to the map
     L.control.layers(base_maps, overlay_maps).addTo(my_map);
 
+    //-------- LEGEND --------//
     // Setup the legend
     let legend = L.control({position: "bottomright"});
 
@@ -91,7 +92,7 @@ function create_markers(marker_response, plate_response) {
     let feature = marker_response.features;
     let line_feature = plate_response.features;
 
-    //--------- CREATE MARKERS ---------//
+    //-------- COLOUR SCALE --------//
     // Get the depths as an array
     let depth_array = feature.map((feat) => feat.geometry.coordinates[2]);
 
@@ -103,7 +104,8 @@ function create_markers(marker_response, plate_response) {
     // Round off the limits to more consistent numbering
     let colour_limits = []
     chroma_limits.forEach((step) => colour_limits.push(Math.floor(step/100) * 100));
-    
+
+    //-------- CREATE MARKERS --------//
     // Initialise the array to hold the markers
     let earthquake_markers = [];
     
