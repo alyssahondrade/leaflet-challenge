@@ -114,19 +114,22 @@ function create_markers(marker_response, plate_response) {
         let depth = feature[i].geometry.coordinates[2];
 
         // Get the "magnitude"
-        let mag = feature[i].properties.mag;
+        let magnitude = feature[i].properties.mag;
 
         // Get the "place", as additional info for the popup
         let location = feature[i].properties.place;
         
         // Create the marker
         let marker = L.circleMarker([lat, lon], {
-            radius: mag*5,
+            radius: magnitude * 5,
             fillColor: colour_scale[0],
             fillOpacity: 1,
             color: "grey",
             weight: 1
-        }).bindPopup(location);
+        }).bindPopup(
+            `<b>Magnitude:</b> ${magnitude}<br>\
+            <b>Location:</b> ${location}<br>\
+            <b>Depth:</b> ${depth} km`);
 
         // Adjust the colour
         for (let i=0; i<colour_limits.length; i++) {

@@ -120,7 +120,10 @@ function create_markers(response) {
             fillOpacity: 1,
             color: "grey",
             weight: 1
-        }).bindPopup(location);
+        }).bindPopup(
+            `<b>Magnitude:</b> ${magnitude}<br>\
+            <b>Location:</b> ${location}<br>\
+            <b>Depth:</b> ${depth}`);
 
         // Adjust the colour
         for (let i=0; i<colour_limits.length; i++) {
