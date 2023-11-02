@@ -150,10 +150,14 @@ function create_markers(marker_response, plate_response) {
         );
 
         // Adjust the colour
-        for (let i=0; i<colour_limits.length; i++) {
-            if (depth < colour_limits[i]) {
-                marker.options.fillColor = colour_scale[i];
+        let last_index = colour_limits.length-1
+        for (let i=1; i<colour_limits.length; i++) {
+            if (depth > colour_limits[i-1] && depth < colour_limits[i]) {
+                marker.options.fillColor = colour_scale[i-1];
                 break; // once executed, stop
+            }
+            else if (depth > colour_limits[last_index]) {
+                marker.options.fillColor = colour_scale[last_index]
             }
         };
 
