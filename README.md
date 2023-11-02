@@ -16,10 +16,11 @@ Github repository at: [https://github.com/alyssahondrade/leaflet-challenge.git](
 ## Introduction
 
 ### Goal
-
+The goal of the project is to visualise USGS Earthquake data, such as location, magnitude, and depth, in a meaningful way.
 
 ### Repository Structure
-
+- [`Leaflet-Part-1`] contains the source code [(`logic.js`)]for the basic earthquake visualisation.
+- [`Leaflet-Part-2`] contains the source code [(`bonus.js`)]for the extended visualisation, which includes tectonic plates.
 
 ### Dataset
 The project utilises "All Earthquakes" from the "Past 7 Days".
@@ -27,7 +28,54 @@ The project utilises "All Earthquakes" from the "Past 7 Days".
 USGS Earthquake Hazards Program [https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
 
 ## Approach
+### Part 1
+1. Define the url which contains the geojson data: ["https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"]("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson")
 
+2. Get the data from the URL using `d3.json()`.
+
+3. Build the `create_markers()` function.
+    - Initialise the variables to assign the depth as the marker colour.
+        - Create an array of depths using `map()`.
+        - The "Digital Colour Meter" was used to identify three colours to define the colour scale range.
+        - Use `chroma.scale()` from `chroma.js` to build the colour scale.
+        - Use `chroma.limits()` to define the corresponding labels for the scale.
+        - Use `Math.floor()` to achieve a more consistent numbering.
+    - Use a for-loop over each "feature" property.
+        - Parse the coordinates property, ensuring the correct latitude and longitude values are selected.
+        - Get `magnitude` and `place` from `properties`.
+        - Build the marker using `L.circleMarker()`
+        - Add the popup for: magnitude, location, and depth.
+        - Adjust the marker colour using values from the `colour_limits` array.
+    - Create a layer group from the markers.
+    - Pass the layer group, colour scale, and colour limits to the `create_map()` function.
+
+4. Build the `create_map()` function.
+    - Create the tile layer.
+    - Create the base maps object.
+    - Create the overlay maps object.
+    - Use `L.map` to create the map.
+        - Deine the `center` and `zoom` parameters.
+        - Set the default layers using `layers`.
+        - Set `worldCopyJump` to `true` to map the layers when panning.
+    - Use `L.control` to add the layers to the map.
+    - Build the legend.
+        - Create the labels by using the colour limits provided to the function.
+        - Use `onAdd` to build the legend elements.
+    - Legend styling:
+        - Separate the colours from the text by defining a `<span>` with style parameters:
+            - `width: 20px`
+            - `height: 20px`
+            - `background-color` as per the colour scale
+            - `margin-right: 5px` to create the gap between the colour block and the text
+        - Apply the following style to the unordered list:
+            - `list-style: none` will remove the dot points
+            - `padding: 0` and `margin: 0` will remove the padding around everything
+        - Style the `div` itself:
+            - Set the `backgroundColor` to `mintcream`
+            - Set the `border-radius` to round off the edges
+            - Return a consistent padding by changing the `padding` parameter
+
+### Part 2
 
 ## References
 - [1] Leaflet Provider Demo [https://leaflet-extras.github.io/leaflet-providers/preview/](https://leaflet-extras.github.io/leaflet-providers/preview/)
