@@ -94,7 +94,6 @@ function create_markers(response) {
     // Define colour scale and limits
     let num_colours = 6;
     let colour_scale = chroma.scale(["peachpuff", "palevioletred", "rebeccapurple"]).colors(num_colours);
-    console.log(colour_scale);
 
     // Round off the limits to more consistent numbering
     let min_depth = Math.min(...depth_array);
@@ -109,7 +108,6 @@ function create_markers(response) {
             colour_limits.push(rounded + i * 20);
         }
     };
-    console.log(colour_limits);
 
     //-------- CREATE MARKERS --------//
     // Initialise the array to hold the markers
@@ -120,7 +118,6 @@ function create_markers(response) {
         let lat = feature[i].geometry.coordinates[1];
         let lon = feature[i].geometry.coordinates[0];
         let depth = feature[i].geometry.coordinates[2];
-        console.log(depth);
 
         // Get the "magnitude"
         let magnitude = feature[i].properties.mag;
