@@ -131,7 +131,8 @@ function create_markers(marker_response, plate_response) {
         }).bindPopup(
             `<b>Magnitude:</b> ${magnitude}<br>\
             <b>Location:</b> ${location}<br>\
-            <b>Depth:</b> ${depth} km`);
+            <b>Depth:</b> ${depth} km`
+        );
 
         // Adjust the colour
         for (let i=0; i<colour_limits.length; i++) {
