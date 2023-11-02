@@ -1,18 +1,20 @@
 // USGS - Past 7 days, all earthquakes
 let url_markers = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
-// let url_plates = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json";
+
+// Use the "Boundaries" for the tectonic plates
 let url_plates = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
 
 // Define map parameters
 let map_centre = [-25.274399, 133.775131]; // Australia
-// let map_centre = [-33.137550, 81.826172]; // Indian Ocean
-// let map_centre = [-0.789275, 113.921326]; // Indonesia
 let map_zoom = 3.5;
 
 function create_map(markers_layer, tectonic_layer, colour_scale, colour_limits) {
     // Create the map background tile layer
     let map_background = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        attribution: '&copy;\
+            <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>\
+            contributors &copy;\
+            <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
         maxZoom: 20
     });
@@ -33,7 +35,7 @@ function create_map(markers_layer, tectonic_layer, colour_scale, colour_limits) 
         center: map_centre,
         zoom: map_zoom,
         layers: [map_background, markers_layer, tectonic_layer],
-        maxZoom: 2
+        worldCopyJump: true
     });
 
     // Create layer control and add to the map
@@ -46,6 +48,7 @@ function create_map(markers_layer, tectonic_layer, colour_scale, colour_limits) 
     colour_labels = [];
     for (let i=0; i<colour_limits.length; i++) {
         if (i === colour_limits.length-1) {
+            // For the final label only
             colour_labels.push(`${colour_limits[i]}+`);
         }
         else {
@@ -91,11 +94,6 @@ function create_markers(marker_response, plate_response) {
     //--------- CREATE MARKERS ---------//
     // Get the depths as an array
     let depth_array = feature.map((feat) => feat.geometry.coordinates[2]);
-    let min_depth = Math.min(...depth_array);
-    let max_depth = Math.max(...depth_array);
-
-    let rounded_min = Math.floor(min_depth/10) * 10;
-    let rounded_max = Math.floor(max_depth/10) * 10;
 
     // Define colour scale and limits
     let num_colours = 6;
@@ -126,8 +124,8 @@ function create_markers(marker_response, plate_response) {
             radius: mag*5,
             fillColor: colour_scale[0],
             fillOpacity: 1,
-            color: "grey", // line colour
-            weight: 1 // line weight
+            color: "grey",
+            weight: 1
         }).bindPopup(location);
 
         // Adjust the colour

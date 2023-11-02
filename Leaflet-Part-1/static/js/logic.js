@@ -3,14 +3,15 @@ let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.ge
 
 // Define map parameters
 let map_centre = [-25.274399, 133.775131]; // Australia
-// let map_centre = [-33.137550, 81.826172]; // Indian Ocean
-// let map_centre = [-0.789275, 113.921326]; // Indonesia
 let map_zoom = 3.5;
 
 function create_map(layer, colour_scale, colour_limits) {
     // Create the map background tile layer
     let map_background = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        attribution: '&copy;\
+            <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>\
+            contributors &copy;\
+            <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
         maxZoom: 20
     });
@@ -29,7 +30,8 @@ function create_map(layer, colour_scale, colour_limits) {
     let my_map = L.map("map", {
         center: map_centre,
         zoom: map_zoom,
-        layers: [map_background, layer]
+        layers: [map_background, layer],
+        worldCopyJump: true
     });
 
     // Create layer control and add to the map
@@ -42,6 +44,7 @@ function create_map(layer, colour_scale, colour_limits) {
     colour_labels = [];
     for (let i=0; i<colour_limits.length; i++) {
         if (i === colour_limits.length-1) {
+            // For the final label only
             colour_labels.push(`${colour_limits[i]}+`);
         }
         else {
@@ -80,18 +83,11 @@ function create_map(layer, colour_scale, colour_limits) {
 
 
 function create_markers(response) {
-
     // Pull the "features" property from the response
     let feature = response.features;
 
     // Get the depths as an array
     let depth_array = feature.map((feat) => feat.geometry.coordinates[2]);
-    let min_depth = Math.min(...depth_array);
-    let max_depth = Math.max(...depth_array);
-
-    let rounded_min = Math.floor(min_depth/10) * 10;
-    let rounded_max = Math.floor(max_depth/10) * 10;
-    console.log(rounded_min, rounded_max);
 
     // Define colour scale and limits
     let num_colours = 6;
@@ -104,8 +100,6 @@ function create_markers(response) {
     
     // Initialise the array to hold the markers
     let earthquake_markers = [];
-
-    console.log(typeof feature[0].properties.place);
     
     for (let i=0; i<feature.length; i++) {
         // Parse the "coordinates" property
@@ -114,18 +108,18 @@ function create_markers(response) {
         let depth = feature[i].geometry.coordinates[2];
 
         // Get the "magnitude"
-        let mag = feature[i].properties.mag;
+        let magnitude = feature[i].properties.mag;
 
         // Get the "place", as additional info for the popup
         let location = feature[i].properties.place;
         
         // Create the marker
         let marker = L.circleMarker([lat, lon], {
-            radius: mag*5,
+            radius: magnitude * 5,
             fillColor: colour_scale[0],
             fillOpacity: 1,
-            color: "grey", // line colour
-            weight: 1 // line weight
+            color: "grey",
+            weight: 1
         }).bindPopup(location);
 
         // Adjust the colour

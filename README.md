@@ -57,3 +57,5 @@ USGS Earthquake Hazards Program [https://earthquake.usgs.gov/earthquakes/feed/v1
 - [13] Color Name and Hue [https://www.color-blindness.com/color-name-hue/](https://www.color-blindness.com/color-name-hue/)
 
 - [14] Color Names [https://www.w3schools.com/tags/ref_colornames.asp](https://www.w3schools.com/tags/ref_colornames.asp)
+
+- [15] Leaflet Documentation - LatLngBounds [https://leafletjs.com/reference.html#latlngbounds](https://leafletjs.com/reference.html#latlngbounds)
