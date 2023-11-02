@@ -23,9 +23,9 @@ The goal of the project is to visualise USGS Earthquake data, such as location, 
 - [`Leaflet-Part-2`] contains the source code [(`bonus.js`)]for the extended visualisation, which includes tectonic plates.
 
 ### Dataset
-The project utilises "All Earthquakes" from the "Past 7 Days".
+1. "All Earthquakes" from the "Past 7 Days" - USGS Earthquake Hazards Program [https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
 
-USGS Earthquake Hazards Program [https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
+2. Tectonic Plates - Boundaries [https://github.com/fraxen/tectonicplates](https://github.com/fraxen/tectonicplates)
 
 ## Approach
 ### Part 1
@@ -76,6 +76,18 @@ USGS Earthquake Hazards Program [https://earthquake.usgs.gov/earthquakes/feed/v1
             - Return a consistent padding by changing the `padding` parameter
 
 ### Part 2
+1. Copy the code from Part 1.
+
+2. Nest another `d3.json()` to get the tectonic data from the url.
+
+3. Add code to the `create_map()` function that will draw the lines.
+    - Get the correct latitude and longitude using `map()` and `reverse()`.
+    - Use `L.polyline()` to build each feature.
+
+4. Create the layer group as before, and add this as a new parameter to the `create_map()` function.
+
+5. Add the `tectonic_layer` to the overlay maps object for display.
+
 
 ## References
 - [1] Leaflet Provider Demo [https://leaflet-extras.github.io/leaflet-providers/preview/](https://leaflet-extras.github.io/leaflet-providers/preview/)
