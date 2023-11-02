@@ -126,7 +126,7 @@ function create_markers(response) {
         }).bindPopup(
             `<b>Magnitude:</b> ${magnitude}<br>\
             <b>Location:</b> ${location}<br>\
-            <b>Depth:</b> ${depth}`
+            <b>Depth:</b> ${depth} km`
         );
 
         // Adjust the colour
